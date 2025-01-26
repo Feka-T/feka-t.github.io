@@ -1,162 +1,153 @@
-<!--
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Page</title>
+    <title>Dynamic Checklist</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ccc;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background-color: #007bff;
+        color: white;
+      }
+      th[contenteditable="true"] {
+        background-color: #007bff;
+      }
+      .controls {
+        margin-bottom: 15px;
+      }
+      button {
+        margin-right: 10px;
+        padding: 8px 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .table-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .table-subtitle {
+        font-size: 1.2em;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1>This is my GitHub Page</h1>
-    <p>I think this is wonderful! And it is a brilliant idea!</p>
+    <div class="container">
+      <h1 align="center">Dynamic Checklist Management</h1>
+      <div class="controls" align="center">
+        <button onclick="addColumn()">Add Column</button>
+        <button onclick="removeColumn()">Remove Column</button>
+        <button onclick="addRow()">Add Row</button>
+        <button onclick="removeRow()">Remove Row</button>
+        <button onclick="Save()">Save</button>
+      </div>
+
+      <!-- Table Title -->
+      <div class="table-title">Title of the Checklist</div>
+      <!-- Table Subtitle -->
+      <div class="table-subtitle">Subtitle of the checklist</div>
+
+      <table id="dynamicTable">
+        <thead>
+          <!-- Dynamic Columns Header -->
+          <tr id="headerRow">
+            <th contenteditable="true">Column 1</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td contenteditable="true">Row 1 Col 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      const table = document.getElementById("dynamicTable");
+      const headerRow = document.getElementById("headerRow");
+
+      // Add a new column
+      function addColumn() {
+        const headerCell = document.createElement("th");
+        headerCell.contentEditable = true;
+        headerCell.textContent = `Column ${headerRow.children.length + 1}`;
+        headerRow.appendChild(headerCell);
+
+        Array.from(table.tBodies[0].rows).forEach((row) => {
+          const cell = document.createElement("td");
+          cell.contentEditable = true;
+          cell.textContent = `Row ${row.rowIndex} Col ${headerRow.children.length}`;
+          row.appendChild(cell);
+        });
+      }
+
+      // Remove the last column
+      function removeColumn() {
+        if (headerRow.children.length > 1) {
+          headerRow.lastElementChild.remove();
+          Array.from(table.tBodies[0].rows).forEach((row) =>
+            row.lastElementChild.remove()
+          );
+        } else {
+          alert("At least one column is required.");
+        }
+      }
+
+      // Add a new row
+      function addRow() {
+        const row = document.createElement("tr");
+        for (let i = 0; i < headerRow.children.length; i++) {
+          const cell = document.createElement("td");
+          cell.contentEditable = true;
+          cell.textContent = `Row ${table.tBodies[0].rows.length + 1} Col ${
+            i + 1
+          }`;
+          row.appendChild(cell);
+        }
+        table.tBodies[0].appendChild(row);
+      }
+
+      // Remove the last row
+      function removeRow() {
+        if (table.tBodies[0].rows.length > 1) {
+          table.tBodies[0].lastElementChild.remove();
+        } else {
+          alert("At least one row is required.");
+        }
+      }
+    </script>
   </body>
 </html>
--->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Table with Editable Columns</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f9f9f9;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #007bff;
-      color: white;
-    }
-    th[contenteditable="true"] {
-      background-color: #007bff;
-    }
-    .controls {
-      margin-bottom: 15px;
-    }
-    button {
-      margin-right: 10px;
-      padding: 8px 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .table-title {
-      font-size: 1.5em;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 20px;
-    }
-    .table-subtitle {
-      font-size: 1.2em;
-      text-align: center;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Dynamic Checklist Management</h1>
-    <div class="controls">
-      <button onclick="addColumn()">Add Column</button>
-      <button onclick="removeColumn()">Remove Column</button>
-      <button onclick="addRow()">Add Row</button>
-      <button onclick="removeRow()">Remove Row</button>
-      <button onclick="Save()">Save</button>
-    </div>
-    
-    <!-- Table Title -->
-    <div class="table-title">Title of the Checklist</div>
-    <!-- Table Subtitle -->
-    <div class="table-subtitle">Subtitle of the checklist</div>
-
-    <table id="dynamicTable">
-      <thead>
-        <!-- Dynamic Columns Header -->
-        <tr id="headerRow">
-          <th contenteditable="true">Column 1</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td contenteditable="true">Row 1</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <script>
-    const table = document.getElementById('dynamicTable');
-    const headerRow = document.getElementById('headerRow');
-
-    // Add a new column
-    function addColumn() {
-      const headerCell = document.createElement('th');
-      headerCell.contentEditable = true;
-      headerCell.textContent = `Column ${headerRow.children.length + 1}`;
-      headerRow.appendChild(headerCell);
-
-      Array.from(table.tBodies[0].rows).forEach(row => {
-        const cell = document.createElement('td');
-        cell.contentEditable = true;
-        cell.textContent = `Row ${row.rowIndex + 1} Col ${headerRow.children.length}`;
-        row.appendChild(cell);
-      });
-    }
-
-    // Remove the last column
-    function removeColumn() {
-      if (headerRow.children.length > 1) {
-        headerRow.lastElementChild.remove();
-        Array.from(table.tBodies[0].rows).forEach(row => row.lastElementChild.remove());
-      } else {
-        alert('At least one column is required.');
-      }
-    }
-
-    // Add a new row
-    function addRow() {
-      const row = document.createElement('tr');
-      for (let i = 0; i < headerRow.children.length; i++) {
-        const cell = document.createElement('td');
-        cell.contentEditable = true;
-        cell.textContent = `Row ${table.tBodies[0].rows.length + 1} Col ${i + 1}`;
-        row.appendChild(cell);
-      }
-      table.tBodies[0].appendChild(row);
-    }
-
-    // Remove the last row
-    function removeRow() {
-      if (table.tBodies[0].rows.length > 1) {
-        table.tBodies[0].lastElementChild.remove();
-      } else {
-        alert('At least one row is required.');
-      }
-    }
-  </script>
-</body>
-</html>
-
