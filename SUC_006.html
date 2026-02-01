@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUC_006: Investment Strategy & Monitoring</title>
+    <style>
+        :root {
+            --primary-dark: #2c3e50;
+            --accent-green: #27ae60;
+            --alert-red: #e74c3c;
+            --ui-blue: #3498db;
+            --bg-gray: #f4f6f8;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg-gray); margin: 0; display: flex; color: #333; }
+        
+        /* Sidebar */
+        .sidebar { width: 250px; background: var(--primary-dark); height: 100vh; color: white; padding: 20px; position: fixed; box-sizing: border-box;}
+        .nav-item { padding: 12px; cursor: pointer; border-radius: 4px; margin-bottom: 8px; font-size: 0.9rem; }
+        .nav-item.active { background: var(--ui-blue); font-weight: bold; }
+
+        .container { margin-left: 250px; padding: 30px; width: calc(100% - 250px); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
+        .tab { padding: 10px 20px; cursor: pointer; background: #eee; border-radius: 5px 5px 0 0; font-weight: 600; }
+        .tab.active { background: white; border: 2px solid #ddd; border-bottom: none; color: var(--ui-blue); }
+
+        .card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .card-title { font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        /* Watchlist Table */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+        .price-up { color: var(--accent-green); }
+        .price-down { color: var(--alert-red); }
+
+        /* Form Controls */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; }
+        select, input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-green { background: var(--accent-green); color: white; }
+        .btn-blue { background: var(--ui-blue); color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>IAMS Strategy</h2>
+        <div class="nav-item">Investment Policy</div>
+        <div class="nav-item">Market Analysis</div>
+        <div class="nav-item active">Strategy & Monitoring</div>
+        <div class="nav-item">Asset Registration</div>
+    </div>
+
+    <div class="container">
+        <h1>Investment Strategy & Monitoring</h1>
+        
+        <div class="tabs">
+            <div class="tab active">Backtesting</div>
+            <div class="tab"><a href="SUC_006_2.html">Watchlists & Alerts</a></div>
+            <div class="tab"><a href="SUC_006_1.html">Screening Criteria</a></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Strategy Backtesting Engine</div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Strategy Type</label>
+                    <select>
+                        <option>Moving Average Crossover</option>
+                        <option>Mean Reversion (RSI-based)</option>
+                        <option>Dividend Yield Focus</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Time Horizon (Historical)</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="date" value="2020-01-01">
+                        <input type="date" value="2023-12-31">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Screening Rules (Filter Criteria)</label>
+                <input type="text" placeholder="e.g., P/E Ratio < 15 AND Dividend Yield > 4%">
+            </div>
+            <button class="btn btn-green">Run Backtest</button>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title">Active Watchlist</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Current Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ETH-TEL</strong></td>
+                            <td>145.20</td>
+                            <td class="price-up">+1.2%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NBE-BOND-10Y</strong></td>
+                            <td>98.50</td>
+                            <td class="price-down">-0.4%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>COOP-BANK</strong></td>
+                            <td>22.15</td>
+                            <td class="price-up">+3.5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Automated Market Alerts</div>
+                <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                    <li style="padding: 10px; border-bottom: 1px solid #f9f9f9;">
+                        🔔 <strong>Price Alert:</strong> Notify if ETH-TEL drops below 140.00.
+                    </li>
+                    <li style="padding: 10px; border-bottom: 1px solid #f9f9f9;">
+                        🔔 <strong>Volatility Alert:</strong> Notify if Daily VaR exceeds 2.5%.
+                    </li>
+                    <li style="padding: 10px; border-bottom: 1px solid #f9f9f9; color: var(--alert-red);">
+                        ⚠️ <strong>Triggered:</strong> Fixed Income exposure reached upper threshold (60%).
+                    </li>
+                </ul>
+                <button class="btn btn-blue" style="width: 100%; margin-top: 15px;">+ Create New Alert</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

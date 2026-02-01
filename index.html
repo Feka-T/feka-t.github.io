@@ -1,158 +1,284 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dynamic Checklist</title>
+    <title>SUC_001: Investment Policy Management</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f9f9f9;
+      :root {
+        --primary-blue: #2c3e50;
+        --accent-blue: #3498db;
+        --bg-light: #f4f7f6;
+        --white: #ffffff;
+        --border-color: #ddd;
       }
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-light);
+        margin: 0;
+        display: flex;
+      }
+
+      /* Sidebar Navigation */
+      .sidebar {
+        width: 250px;
+        background: var(--primary-blue);
+        height: 100vh;
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        position: fixed;
+      }
+      .sidebar h2 {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #455a64;
+        padding-bottom: 10px;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar li {
+        padding: 12px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: 0.3s;
+      }
+      .sidebar li:hover,
+      .sidebar li.active {
+        background: var(--accent-blue);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        margin-left: 250px;
+        padding: 30px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      /* Tables */
+      .card {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
       }
       table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
-      }
-      table,
-      th,
-      td {
-        border: 1px solid #ccc;
+        margin-top: 10px;
       }
       th,
       td {
-        padding: 10px;
-        text-align: center;
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid var(--border-color);
       }
       th {
-        background-color: #007bff;
-        color: white;
+        background: #f8f9fa;
+        font-weight: 600;
       }
-      th[contenteditable="true"] {
-        background-color: #007bff;
-      }
-      .controls {
-        margin-bottom: 15px;
-      }
-      button {
-        margin-right: 10px;
-        padding: 8px 12px;
-        background-color: #007bff;
-        color: white;
+      .btn {
+        padding: 8px 15px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        text-decoration: none;
+        font-size: 0.9rem;
       }
-      button:hover {
-        background-color: #0056b3;
+      .btn-new {
+        background: #27ae60;
+        color: white;
       }
-      .table-title {
-        font-size: 1.5em;
-        font-weight: bold;
-        text-align: center;
+      .btn-review {
+        background: #f39c12;
+        color: white;
+        margin-right: 5px;
+      }
+      .btn-update {
+        background: var(--accent-blue);
+        color: white;
+      }
+
+      /* Form Styling */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #555;
+      }
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+      }
+      textarea {
+        height: 80px;
+        resize: vertical;
+      }
+      .section-title {
+        font-size: 1.1rem;
+        color: var(--primary-blue);
+        border-left: 4px solid var(--accent-blue);
+        padding-left: 10px;
+        margin: 20px 0 15px;
+      }
+      .form-actions {
         margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
       }
-      .table-subtitle {
-        font-size: 1.2em;
-        text-align: center;
-        margin-top: 10px;
+      .btn-submit {
+        background: var(--primary-blue);
+        color: white;
+        padding: 10px 25px;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1 align="center">Dynamic Checklist Management</h1>
-      <div class="controls" align="center">
-        <button onclick="addColumn()">Add Column</button>
-        <button onclick="removeColumn()">Remove Column</button>
-        <button onclick="addRow()">Add Row</button>
-        <button onclick="removeRow()">Remove Row</button>
-        <button onclick="Save()">Save</button>
-        <button
-          onclick="window.location.href='https://www.figma.com/proto/drx34rWChtbifdJaOs03hN/Fekadu-Tadesse%27s-team-library?node-id=2991-16651&p=f&t=8c55klDZkeSqPDZZ-0&scaling=scale-down&content-scaling=fixed&page-id=2951%3A12597&starting-point-node-id=3615%3A20139&show-proto-sidebar=1'"
-        >
-          Back
+    <div class="sidebar">
+      <h2>IAMS Dashboard</h2>
+      <ul>
+        <li>Dashboard</li>
+        <li class="active">Investment Policy</li>
+        <li>Market Analysis</li>
+        <li>Portfolio Management</li>
+        <li>Risk Reports</li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <h1>Manage Investment Policy</h1>
+        <button class="btn btn-new">
+          <a href="SUC_001_1.html">+ Create New Policy</a>
         </button>
       </div>
 
-      <!-- Table Title -->
-      <div class="table-title">Title of the Checklist</div>
-      <!-- Table Subtitle -->
-      <div class="table-subtitle">Subtitle of the checklist</div>
+      <div class="card">
+        <h2 class="section-title">Registered Investment Policies</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Policy ID</th>
+              <th>Policy Name</th>
+              <th>Last Updated</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>POL-2023-001</td>
+              <td>Strategic Asset Allocation - Corporate</td>
+              <td>2023-11-15</td>
+              <td>Active</td>
+              <td>
+                <button class="btn btn-review">Review</button>
+                <button class="btn btn-update">Update</button>
+              </td>
+            </tr>
+            <tr>
+              <td>POL-2024-002</td>
+              <td>Fixed Income Strategy</td>
+              <td>2024-01-10</td>
+              <td>Pending Approval</td>
+              <td>
+                <button class="btn btn-review">Review</button>
+                <button class="btn btn-update">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <table id="dynamicTable">
-        <thead>
-          <!-- Dynamic Columns Header -->
-          <tr id="headerRow">
-            <th contenteditable="true">Column 1</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td contenteditable="true">Row 1 Col 1</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="card">
+        <h2 class="section-title">
+          Update Policy Parameters: Strategic Asset Allocation
+        </h2>
+        <form>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Asset Allocation Targets (%)</label>
+              <input type="text" placeholder="e.g., Equity: 40%, Bonds: 60%" />
+            </div>
+            <div class="form-group">
+              <label>Allowable Ranges (+/- %)</label>
+              <input type="text" placeholder="e.g., 5%" />
+            </div>
+            <div class="form-group">
+              <label>Risk Limits</label>
+              <input type="text" placeholder="Value at Risk (VaR) thresholds" />
+            </div>
+            <div class="form-group">
+              <label>Rebalancing Thresholds</label>
+              <input
+                type="text"
+                placeholder="Trigger percentage for rebalance"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>ESG Exclusions/Rules</label>
+              <textarea
+                placeholder="List excluded sectors or compliance rules"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label>Benchmark Indices</label>
+              <input type="text" placeholder="e.g., S&P 500, MSCI World" />
+            </div>
+          </div>
+
+          <h2 class="section-title">Justification & Findings</h2>
+          <div class="form-group">
+            <label>Description of Changes</label>
+            <textarea
+              placeholder="Summarize the modifications made..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label>Market Analysis & Economic Forecast Findings</label>
+            <textarea
+              placeholder="Details based on current market trends and forecasts..."
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn">Cancel</button>
+            <button type="button" class="btn btn-review">Save Draft</button>
+            <button type="submit" class="btn btn-submit">
+              Submit Draft for Approval
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <button type="button" class="btn">
+          <a href="SUC_002.html">SUC_002</a>
+        </button>
+      </div>
     </div>
-
-    <script>
-      const table = document.getElementById("dynamicTable");
-      const headerRow = document.getElementById("headerRow");
-
-      // Add a new column
-      function addColumn() {
-        const headerCell = document.createElement("th");
-        headerCell.contentEditable = true;
-        headerCell.textContent = `Column ${headerRow.children.length + 1}`;
-        headerRow.appendChild(headerCell);
-
-        Array.from(table.tBodies[0].rows).forEach((row) => {
-          const cell = document.createElement("td");
-          cell.contentEditable = true;
-          cell.textContent = `Row ${row.rowIndex} Col ${headerRow.children.length}`;
-          row.appendChild(cell);
-        });
-      }
-
-      // Remove the last column
-      function removeColumn() {
-        if (headerRow.children.length > 1) {
-          headerRow.lastElementChild.remove();
-          Array.from(table.tBodies[0].rows).forEach((row) =>
-            row.lastElementChild.remove()
-          );
-        } else {
-          alert("At least one column is required.");
-        }
-      }
-
-      // Add a new row
-      function addRow() {
-        const row = document.createElement("tr");
-        for (let i = 0; i < headerRow.children.length; i++) {
-          const cell = document.createElement("td");
-          cell.contentEditable = true;
-          cell.textContent = `Row ${table.tBodies[0].rows.length + 1} Col ${
-            i + 1
-          }`;
-          row.appendChild(cell);
-        }
-        table.tBodies[0].appendChild(row);
-      }
-
-      // Remove the last row
-      function removeRow() {
-        if (table.tBodies[0].rows.length > 1) {
-          table.tBodies[0].lastElementChild.remove();
-        } else {
-          alert("At least one row is required.");
-        }
-      }
-    </script>
   </body>
 </html>

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SUC_001: Create New Investment Policy</title>
+    <style>
+      :root {
+        --primary-blue: #2c3e50;
+        --accent-blue: #3498db;
+        --bg-light: #f8f9fa;
+        --white: #ffffff;
+        --border: #ced4da;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: var(--bg-light);
+        margin: 0;
+        display: flex;
+        color: #333;
+      }
+
+      /* Navigation Sidebar */
+      .sidebar {
+        width: 250px;
+        background: var(--primary-blue);
+        height: 100vh;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        box-sizing: border-box;
+      }
+      .sidebar h2 {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #455a64;
+        padding-bottom: 10px;
+      }
+      .nav-item {
+        padding: 12px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        transition: 0.2s;
+      }
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .nav-item.active {
+        background: var(--accent-blue);
+        font-weight: bold;
+      }
+
+      .container {
+        margin-left: 250px;
+        padding: 40px;
+        width: calc(100% - 250px);
+        max-width: 1000px;
+      }
+      .header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--accent-blue);
+        padding-bottom: 15px;
+      }
+
+      .card {
+        background: var(--white);
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 25px;
+      }
+      .section-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--primary-blue);
+        margin-bottom: 20px;
+        border-left: 5px solid var(--accent-blue);
+        padding-left: 15px;
+      }
+
+      /* Form Layout */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .form-group.full-width {
+        grid-column: span 2;
+      }
+
+      label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: #444;
+      }
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      textarea {
+        height: 100px;
+        resize: vertical;
+      }
+
+      /* Asset Allocation Table */
+      .allocation-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+      }
+      .allocation-table th,
+      .allocation-table td {
+        padding: 12px;
+        border: 1px solid #eee;
+        text-align: left;
+      }
+      .allocation-table th {
+        background: #f1f3f5;
+        font-size: 0.85rem;
+      }
+
+      .actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        margin-top: 30px;
+      }
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: 0.3s;
+      }
+      .btn-cancel {
+        background: #e9ecef;
+        color: #495057;
+      }
+      .btn-draft {
+        background: #fff;
+        border: 2px solid var(--accent-blue);
+        color: var(--accent-blue);
+      }
+      .btn-submit {
+        background: var(--primary-blue);
+        color: white;
+      }
+      .btn-submit:hover {
+        background: #1a252f;
+      }
+
+      .helper-text {
+        font-size: 0.75rem;
+        color: #6c757d;
+        margin-top: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>IAMS PORTAL</h2>
+      <div class="nav-item active">Investment Policy</div>
+      <div class="nav-item">Data Integration</div>
+      <div class="nav-item">Trend Analysis</div>
+      <div class="nav-item">Stress Testing</div>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <h1>Create New Investment Policy</h1>
+        <p>
+          Define global parameters for a new investment framework. All fields
+          are required for compliance review.
+        </p>
+      </div>
+
+      <form>
+        <div class="card">
+          <div class="section-title">General Policy Info</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Policy Name</label>
+              <input
+                type="text"
+                placeholder="e.g., 2024 Strategic Growth Fund"
+              />
+            </div>
+            <div class="form-group">
+              <label>Effective Date</label>
+              <input type="date" />
+            </div>
+            <div class="form-group">
+              <label>Policy Category</label>
+              <select>
+                <option>Select category...</option>
+                <option>Corporate Portfolio</option>
+                <option>Pension Fund</option>
+                <option>Endowment</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Base Currency</label>
+              <input type="text" value="ETB" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Strategic Asset Allocation</div>
+          <p class="helper-text" style="margin-bottom: 15px">
+            Define target weights and allowable variance ranges for each asset
+            class.
+          </p>
+          <table class="allocation-table">
+            <thead>
+              <tr>
+                <th>Asset Class</th>
+                <th>Target Weight (%)</th>
+                <th>Min Range (%)</th>
+                <th>Max Range (%)</th>
+                <th>Benchmark Index</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Equities</strong></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td>
+                  <select>
+                    <option>ESX Index</option>
+                    <option>MSCI World</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Fixed Income</strong></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td>
+                  <select>
+                    <option>NBE T-Bill Rate</option>
+                    <option>Bloomberg Agg</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Cash/Liquid</strong></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td><input type="number" style="width: 60px" /></td>
+                <td>
+                  <select>
+                    <option>Savings Rate</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Risk & ESG Parameters</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Risk Limits (VaR Threshold)</label>
+              <input
+                type="text"
+                placeholder="e.g., 99% Confidence / 5% Limit"
+              />
+            </div>
+            <div class="form-group">
+              <label>Rebalancing Frequency</label>
+              <select>
+                <option>Monthly</option>
+                <option selected>Quarterly</option>
+                <option>Threshold-based only</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label>ESG Exclusions & Restrictions</label>
+              <textarea
+                placeholder="List sectors, companies, or compliance rules (e.g., No Tobacco, Carbon limit > 20%)..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Policy Rationale & Justification</div>
+          <div class="form-group full-width" style="margin-bottom: 20px">
+            <label>Description of Policy Objective</label>
+            <textarea
+              placeholder="Outline the strategic intent of this new policy..."
+            ></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label>Findings (Market Data & Forecasts)</label>
+            <textarea
+              placeholder="Reference findings from SUC_004 (Trend Analysis) to justify these parameters..."
+            ></textarea>
+            <span class="helper-text"
+              >Evidence-based rationale is required for Department Head
+              approval.</span
+            >
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-cancel">Cancel</button>
+          <button type="button" class="btn btn-draft">Save as Draft</button>
+          <button type="submit" class="btn btn-submit">
+            Submit for Approval
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SUC_002: Policy Approval Dashboard</title>
+    <style>
+      :root {
+        --primary-blue: #2c3e50;
+        --accent-blue: #3498db;
+        --bg-light: #f4f7f6;
+        --white: #ffffff;
+        --border-color: #ddd;
+        --success-green: #27ae60;
+        --danger-red: #e74c3c;
+        --warning-orange: #f39c12;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-light);
+        margin: 0;
+        display: flex;
+      }
+
+      .sidebar {
+        width: 250px;
+        background: var(--primary-blue);
+        height: 100vh;
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        position: fixed;
+      }
+      .sidebar h2 {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #455a64;
+        padding-bottom: 10px;
+      }
+      /* .sidebar h2 { font-size: 1.1rem; border-bottom: 1px solid #455a64; padding-bottom: 10px; } */
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      .sidebar li {
+        padding: 12px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: 0.3s;
+        margin-bottom: 5px;
+      }
+      .sidebar li:hover {
+        background: var(--accent-blue);
+      }
+      .sidebar .active {
+        background: var(--accent-blue);
+      }
+      .badge {
+        background: var(--danger-red);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        float: right;
+      }
+
+      .main-content {
+        flex: 1;
+        margin-left: 250px;
+        padding: 30px;
+        box-sizing: border-box;
+      }
+      .card {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+
+      /* Workflow Tracker */
+      .workflow-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      .step {
+        text-align: center;
+        flex: 1;
+        z-index: 2;
+      }
+      .step-circle {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #ddd;
+        color: white;
+        line-height: 35px;
+        margin: 0 auto 10px;
+        font-weight: bold;
+      }
+      .step.active .step-circle {
+        background: var(--accent-blue);
+      }
+      .step.completed .step-circle {
+        background: var(--success-green);
+      }
+      .step-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #777;
+      }
+      .workflow-line {
+        position: absolute;
+        top: 17px;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: #ddd;
+        z-index: 1;
+      }
+
+      /* Comparison Table (Delta Analysis) */
+      .delta-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+      .delta-table th,
+      .delta-table td {
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        text-align: left;
+      }
+      .delta-table th {
+        background: #f8f9fa;
+      }
+      .changed-value {
+        color: var(--danger-red);
+        font-weight: 600;
+        background: #fff5f5;
+        padding: 2px 5px;
+        border-radius: 3px;
+      }
+
+      .impact-box {
+        background: #fff9e6;
+        border-left: 5px solid var(--warning-orange);
+        padding: 15px;
+        margin: 20px 0;
+      }
+      .impact-box h4 {
+        margin: 0 0 10px 0;
+        color: #856404;
+      }
+
+      .actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+      .btn {
+        padding: 10px 25px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-approve {
+        background: var(--success-green);
+        color: white;
+      }
+      .btn-reject {
+        background: var(--danger-red);
+        color: white;
+      }
+      .btn-info {
+        background: #eee;
+        color: #333;
+      }
+
+      textarea {
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>IAMS Approvals</h2>
+      <ul>
+        <li class="active">Pending Approvals <span class="badge">3</span></li>
+        <li>Approval History</li>
+        <li>Policy Repository</li>
+        <li>Reports</li>
+      </ul>
+    </div>
+
+    <div class="main-content">
+      <h1>Policy Review & Approval</h1>
+
+      <div class="card">
+        <div class="workflow-steps">
+          <div class="workflow-line"></div>
+          <div class="step completed">
+            <div class="step-circle">✓</div>
+            <div class="step-label">Originator (Officer)</div>
+          </div>
+          <div class="step active">
+            <div class="step-circle">2</div>
+            <div class="step-label">Department Head</div>
+          </div>
+          <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-label">CEO</div>
+          </div>
+          <div class="step">
+            <div class="step-circle">4</div>
+            <div class="step-label">Executive Board</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Proposal Details: Strategic Asset Allocation (POL-2023-001)</h3>
+        <p>
+          <strong>Submitted By:</strong> John Doe (Investment Officer) |
+          <strong>Date:</strong> Oct 24, 2024
+        </p>
+        <p>
+          <strong>Rationale:</strong> Adjustment required due to new NBE
+          regulatory updates and current volatility in fixed-income markets.
+        </p>
+
+        <h4 style="margin-top: 25px">Delta Analysis (Proposed vs. Current)</h4>
+        <table class="delta-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Current Value</th>
+              <th>Proposed Value</th>
+              <th>Difference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Equity Allocation Target</td>
+              <td>40%</td>
+              <td><span class="changed-value">45%</span></td>
+              <td>+5.0%</td>
+            </tr>
+            <tr>
+              <td>Risk Limit (VaR)</td>
+              <td>2.5%</td>
+              <td><span class="changed-value">3.0%</span></td>
+              <td>+0.5%</td>
+            </tr>
+            <tr>
+              <td>ESG Exclusion List</td>
+              <td>Tobacco, Arms</td>
+              <td>
+                Tobacco, Arms, <span class="changed-value">Coal Mining</span>
+              </td>
+              <td>New Category Added</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="impact-box">
+          <h4>⚠️ Impacted Modules & Business Rules</h4>
+          <ul>
+            <li>
+              <strong>Portfolio Rebalancing:</strong> Thresholds will trigger
+              immediate trades for 12 existing portfolios.
+            </li>
+            <li>
+              <strong>Compliance Engine:</strong> Rule <em>ESG_04</em> will be
+              updated to flag coal-related holdings.
+            </li>
+          </ul>
+        </div>
+
+        <h4>Review Comments</h4>
+        <textarea
+          placeholder="Add comments for the next approver or reason for rejection..."
+        ></textarea>
+
+        <div class="actions">
+          <button class="btn btn-info">Request Info</button>
+          <button class="btn btn-reject">Reject Proposal</button>
+          <button class="btn btn-approve">Approve & Forward to CEO</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Supporting Documents</h4>
+        <ul>
+          <li><a href="#">Market_Analysis_Oct_2024.pdf</a></li>
+          <li><a href="#">NBE_Regulatory_Update_v2.pdf</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <button type="button" class="btn">
+          <a href="SUC_003.html">SUC_003</a>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SUC_004: Economic & Market Trend Analysis</title>
+    <style>
+      :root {
+        --dark-navy: #2c3e50;
+        --soft-blue: #eef2f7;
+        --chart-blue: #3498db;
+        --chart-green: #2ecc71;
+        --text-main: #333;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f0f2f5;
+        margin: 0;
+        display: flex;
+        color: var(--text-main);
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background: var(--dark-navy);
+        height: 100vh;
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+        position: fixed;
+      }
+      .sidebar h2 {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #455a64;
+        padding-bottom: 10px;
+      }
+      /* .sidebar { width: 200px; background: var(--dark-navy); height: 100vh; color: white; padding: 20px; position: fixed; } */
+      .nav-item {
+        padding: 12px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+      }
+      .nav-item.active {
+        background: #2980b9;
+      }
+
+      /* Content */
+      .container {
+        margin-left: 250px;
+        padding: 30px;
+        width: calc(100% - 250px);
+      }
+      .header {
+        margin-bottom: 25px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+      }
+      .card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        margin-bottom: 20px;
+      }
+      .card-title {
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: var(--dark-navy);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* Chart Placeholder */
+      .chart-placeholder {
+        height: 250px;
+        background: var(--soft-blue);
+        border: 1px dashed #ccc;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .trend-line {
+        position: absolute;
+        width: 80%;
+        height: 2px;
+        background: var(--chart-blue);
+        transform: rotate(-10deg);
+      }
+
+      /* Indicators Table */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+      }
+      .data-table th,
+      .data-table td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .positive {
+        color: #27ae60;
+        font-weight: bold;
+      }
+      .negative {
+        color: #e74c3c;
+        font-weight: bold;
+      }
+
+      /* Forecasting Form */
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .btn-primary {
+        background: var(--chart-blue);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>IAMS Portal</h2>
+      <div class="nav-item">Investment Policy</div>
+      <div class="nav-item">Data Integration</div>
+      <div class="nav-item active">Trend Analysis</div>
+      <div class="nav-item">Portfolio Simulation</div>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <h1>Economic & Market Trend Analysis</h1>
+        <p>
+          Analyze micro/macroeconomic indicators and generate market forecasts.
+        </p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-title">
+            Market Performance Trends (ESX vs. Global Benchmarks)
+            <select style="width: auto; font-size: 0.7rem">
+              <option>Last 12 Months</option>
+              <option>Last 5 Years</option>
+            </select>
+          </div>
+          <div class="chart-placeholder">
+            <div class="trend-line" style="top: 50%"></div>
+            <span style="color: #7f8c8d">[Line Chart: Price vs. Time]</span>
+          </div>
+          <p style="font-size: 0.8rem; color: #666; margin-top: 10px">
+            *Data synced from SUC_003 (NBE & ESX Feeds)
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Key Indicators</div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Indicator</th>
+                <th>Current</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Inflation (CPI)</td>
+                <td>28.4%</td>
+                <td class="negative">↑ High</td>
+              </tr>
+              <tr>
+                <td>GDP Growth</td>
+                <td>6.1%</td>
+                <td class="positive">↑ Rising</td>
+              </tr>
+              <tr>
+                <td>FX Rate (USD/ETB)</td>
+                <td>118.2</td>
+                <td class="negative">↓ Depr.</td>
+              </tr>
+              <tr>
+                <td>Treasury Yield</td>
+                <td>14.2%</td>
+                <td>Steady</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-title">Generate Economic Forecast</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px">
+            <div class="form-group">
+              <label>Forecast Horizon</label>
+              <select>
+                <option>Q4 2024</option>
+                <option>Annual 2025</option>
+                <option>5-Year Strategic</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Projected Interest Rate (%)</label>
+              <input type="number" value="15.5" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Analysis Findings & Implications</label>
+            <textarea
+              rows="4"
+              placeholder="Enter qualitative analysis of the trends identified above..."
+            ></textarea>
+          </div>
+          <div style="text-align: right">
+            <button class="btn btn-primary">
+              Save Analysis to Policy Review
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Market Sentiment</div>
+          <div
+            style="
+              padding: 10px;
+              background: #fffde7;
+              border-radius: 4px;
+              font-size: 0.85rem;
+              border: 1px solid #ffe082;
+            "
+          >
+            <strong>Alert:</strong> High correlation detected between
+            Agriculture Commodity prices and Sector Index performance.
+          </div>
+          <ul style="font-size: 0.8rem; margin-top: 15px; padding-left: 20px">
+            <li>NBE clarifies new FX retention rules.</li>
+            <li>Global coffee prices surge by 4%.</li>
+            <li>IMF regional outlook updated.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <button type="button" class="btn">
+          <a href="SUC_005.html">SUC_005</a>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
