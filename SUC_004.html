@@ -3,283 +3,438 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SUC_004: Economic & Market Trend Analysis</title>
+    <title>IAMS - Technical Analysis Terminal (SUC_004)</title>
     <style>
       :root {
-        --dark-navy: #2c3e50;
-        --soft-blue: #eef2f7;
-        --chart-blue: #3498db;
-        --chart-green: #2ecc71;
-        --text-main: #333;
-      }
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background: #f0f2f5;
-        margin: 0;
-        display: flex;
-        color: var(--text-main);
+        /* Sidebar Colors */
+        --sidebar-bg: #2c3e50;
+        --sidebar-hover: #334155;
+        --accent: #38bdf8;
+        --text-muted: #94a3b8;
+
+        /* Terminal Colors */
+        --term-bg: #12151a;
+        --term-card: #1c2128;
+        --term-text: #e6edf3;
+        --accent-blue: #2f81f7;
+        --success-green: #3fb950;
+        --danger-red: #f85149;
+        --border-gray: #30363d;
       }
 
-      /* Sidebar */
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        margin: 0;
+        display: flex;
+        overflow: hidden;
+        height: 100vh;
+        background: var(--term-bg);
+      }
+
+      /* --- Sidebar CSS --- */
       .sidebar {
         width: 250px;
-        background: var(--dark-navy);
-        height: 100vh;
+        background: var(--sidebar-bg);
         color: white;
-        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #334155;
+        /* flex-shrink: 0;
+        z-index: 100; */
         box-sizing: border-box;
-        position: fixed;
       }
-      .sidebar h2 {
-        font-size: 1.2rem;
-        border-bottom: 1px solid #455a64;
-        padding-bottom: 10px;
+      .logo-section {
+        padding: 25px;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--accent);
+        border-bottom: 1px solid #334155;
       }
-      /* .sidebar { width: 200px; background: var(--dark-navy); height: 100vh; color: white; padding: 20px; position: fixed; } */
+      .nav-container {
+        flex: 1;
+        padding: 20px 0;
+        overflow-y: auto;
+      }
+      .nav-label {
+        padding: 0 25px 10px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+      }
       .nav-item {
-        padding: 12px;
+        padding: 12px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         cursor: pointer;
-        border-radius: 4px;
-        margin-bottom: 8px;
+        color: #cbd5e1;
         font-size: 0.9rem;
       }
       .nav-item.active {
-        background: #2980b9;
+        border-left: 4px solid var(--accent);
+        background: rgba(56, 189, 248, 0.1);
+        color: white;
       }
-
-      /* Content */
-      .container {
-        margin-left: 250px;
-        padding: 30px;
-        width: calc(100% - 250px);
+      .submenu {
+        background: #2c3e50;
       }
-      .header {
-        margin-bottom: 25px;
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 10px;
+      .submenu-item {
+        padding: 10px 25px 10px 45px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        display: block;
+        text-decoration: none;
       }
-
-      .dashboard-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 20px;
-      }
-      .card {
-        background: white;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-        margin-bottom: 20px;
-      }
-      .card-title {
+      .submenu-item.active {
+        color: var(--accent);
         font-weight: bold;
-        margin-bottom: 15px;
-        color: var(--dark-navy);
-        display: flex;
-        justify-content: space-between;
       }
-
-      /* Chart Placeholder */
-      .chart-placeholder {
-        height: 250px;
-        background: var(--soft-blue);
-        border: 1px dashed #ccc;
-        border-radius: 6px;
+      .user-profile {
+        padding: 20px;
+        border-top: 1px solid #334155;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .avatar {
+        width: 30px;
+        height: 30px;
+        background: var(--accent);
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #1e293b;
+        font-weight: bold;
+      }
+
+      /* --- Main Content Layout --- */
+      .main-content {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         position: relative;
+        min-width: 0; /* Prevents flex items from overflowing */
+      }
+
+      /* Analysis Toolbar - Adjusted for Sidebar */
+      .toolbar {
+        height: 50px;
+        /* width: 100%; */
+        background: var(--term-card);
+        border-bottom: 1px solid var(--border-gray);
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
+        gap: 20px;
+        z-index: 10;
+      }
+      .tool-group {
+        display: flex;
+        gap: 8px;
+        border-right: 1px solid var(--border-gray);
+        padding-right: 15px;
+      }
+      select,
+      .btn-tool {
+        background: #21262d;
+        border: 1px solid var(--border-gray);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+
+      /* Main Workspace - Adjusted for Sidebar */
+      .workspace {
+        display: grid;
+        /* width: 100%; */
+        grid-template-columns: 1fr 300px;
+        flex: 1;
         overflow: hidden;
       }
-      .trend-line {
-        position: absolute;
-        width: 80%;
-        height: 2px;
-        background: var(--chart-blue);
-        transform: rotate(-10deg);
-      }
 
-      /* Indicators Table */
-      .data-table {
+      /* Chart Area */
+      .chart-container {
+        padding: 20px;
+        position: relative;
+        border-right: 1px solid var(--border-gray);
+        background: radial-gradient(
+          circle at 50% 50%,
+          #1c2128 0%,
+          #12151a 100%
+        );
+        overflow: hidden;
+      }
+      .chart-placeholder {
         width: 100%;
-        border-collapse: collapse;
-        font-size: 0.85rem;
+        height: 70%;
+        border: 1px dashed #444;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url("https://upload.wikimedia.org/wikipedia/commons/e/e3/Candlestick_chart_example.png")
+          center/contain no-repeat;
+        filter: grayscale(1) invert(1);
+        opacity: 0.3;
       }
-      .data-table th,
-      .data-table td {
-        text-align: left;
+      .indicator-pane {
+        height: 25%;
+        border-top: 1px solid var(--border-gray);
+        margin-top: 10px;
         padding: 10px;
-        border-bottom: 1px solid #eee;
-      }
-      .positive {
-        color: #27ae60;
-        font-weight: bold;
-      }
-      .negative {
-        color: #e74c3c;
-        font-weight: bold;
+        position: relative;
       }
 
-      /* Forecasting Form */
-      .form-group {
+      /* Side Panel: Analysis & Findings */
+      .side-panel {
+        padding: 20px;
+        /* width: 100%; */
+        background: var(--term-card);
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      .section-title {
+        font-size: 0.9rem;
+        font-weight: bold;
         margin-bottom: 15px;
+        color: var(--accent-blue);
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
-      label {
-        display: block;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-        font-weight: 600;
-      }
-      input,
-      select,
       textarea {
         width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
+        background: #0d1117;
+        border: 1px solid var(--border-gray);
+        color: white;
+        padding: 10px;
         border-radius: 4px;
-        box-sizing: border-box;
+        height: 120px;
+        margin-bottom: 15px;
       }
 
-      .btn {
-        padding: 10px 20px;
+      .btn-action {
+        width: 100%;
+        padding: 12px;
         border: none;
-        border-radius: 4px;
-        cursor: pointer;
+        border-radius: 6px;
         font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 10px;
       }
       .btn-primary {
-        background: var(--chart-blue);
+        background: var(--accent-blue);
         color: white;
+      }
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--accent-blue);
+        color: var(--accent-blue);
+      }
+
+      /* Mock drawing tools */
+      .drawing-tools {
+        position: absolute;
+        left: 10px;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: var(--term-card);
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid var(--border-gray);
+        z-index: 5;
+      }
+      .draw-icon {
+        width: 24px;
+        height: 24px;
+        color: #8b949e;
+        cursor: pointer;
+        text-align: center;
+        line-height: 24px;
+        font-size: 1.2rem;
       }
     </style>
   </head>
   <body>
-    <div class="sidebar">
-      <h2>IAMS Portal</h2>
-      <div class="nav-item">Investment Policy</div>
-      <div class="nav-item">Data Integration</div>
-      <div class="nav-item active">Trend Analysis</div>
-      <div class="nav-item">Portfolio Simulation</div>
-    </div>
+    <nav class="sidebar">
+      <div class="logo-section">IAMS PORTAL</div>
+      <div class="nav-container">
+        <div class="nav-label">Core Modules</div>
+        <div class="nav-item">
+          <span>Investment Policy</span> <span>▼</span>
+        </div>
 
-    <div class="container">
-      <div class="header">
-        <h1>Economic & Market Trend Analysis</h1>
-        <p>
-          Analyze micro/macroeconomic indicators and generate market forecasts.
-        </p>
+        <div class="nav-item active">
+          <span>Analysis Submenu</span> <span>▼</span>
+        </div>
+        <div class="submenu">
+          <a href="#" class="submenu-item">Data Integration (SUC_003)</a>
+          <a href="#" class="submenu-item active"
+            >Technical Analysis (SUC_004)</a
+          >
+          <a href="#" class="submenu-item">Portfolio Simulation (SUC_005)</a>
+        </div>
+
+        <div class="nav-item" style="margin-top: 10px">
+          <span>Strategy & Monitoring</span>
+        </div>
+        <div class="nav-item"><span>Audit Trail</span></div>
+      </div>
+      <div class="user-profile">
+        <div class="avatar">IR</div>
+        <div>
+          <strong>I. Risk Officer</strong>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-content">
+      <div class="toolbar">
+        <div class="tool-group">
+          <!-- <label style="font-size: 0.8rem" color="white" background-color="white">ASSET:</label> -->
+          <select>
+            <option>ETH-TEL (Ethio Telecom)</option>
+            <option>NBE-BOND-2030</option>
+            <option>ESX</option>
+            <option>CSA</option>
+          </select>
+        </div>
+        <div class="tool-group">
+          <button class="btn-tool">1D</button>
+          <button class="btn-tool">1W</button>
+          <button
+            class="btn-tool active"
+            style="background: var(--accent-blue)"
+          >
+            3M
+          </button>
+          <button class="btn-tool">1Y</button>
+        </div>
+        <div class="tool-group">
+          <select>
+            <option>Indicators (RSI, MA, MACD)</option>
+            <option>Moving Average (50, 200)</option>
+            <option>Relative Strength Index (RSI)</option>
+            <option>Bollinger Bands</option>
+          </select>
+        </div>
+        <div style="margin-left: auto">
+          <span style="color: var(--success-green); font-size: 0.9rem"
+            >● Data Feed: LIVE (ESX/NBE)</span
+          >
+        </div>
       </div>
 
-      <div class="dashboard-grid">
-        <div class="card">
-          <div class="card-title">
-            Market Performance Trends (ESX vs. Global Benchmarks)
-            <select style="width: auto; font-size: 0.7rem">
-              <option>Last 12 Months</option>
-              <option>Last 5 Years</option>
-            </select>
+      <div class="workspace">
+        <div class="chart-container">
+          <div class="drawing-tools">
+            <div class="draw-icon" title="Trendline">╱</div>
+            <div class="draw-icon" title="Fibonacci">≡</div>
+            <div class="draw-icon" title="Text">T</div>
+            <div class="draw-icon" title="Measure">📏</div>
           </div>
+
           <div class="chart-placeholder">
-            <div class="trend-line" style="top: 50%"></div>
-            <span style="color: #7f8c8d">[Line Chart: Price vs. Time]</span>
+            <span style="opacity: 0.5"
+              >Interactive Candlestick Engine (TradingView Style)</span
+            >
           </div>
-          <p style="font-size: 0.8rem; color: #666; margin-top: 10px">
-            *Data synced from SUC_003 (NBE & ESX Feeds)
-          </p>
-        </div>
 
-        <div class="card">
-          <div class="card-title">Key Indicators</div>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Indicator</th>
-                <th>Current</th>
-                <th>Trend</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Inflation (CPI)</td>
-                <td>28.4%</td>
-                <td class="negative">↑ High</td>
-              </tr>
-              <tr>
-                <td>GDP Growth</td>
-                <td>6.1%</td>
-                <td class="positive">↑ Rising</td>
-              </tr>
-              <tr>
-                <td>FX Rate (USD/ETB)</td>
-                <td>118.2</td>
-                <td class="negative">↓ Depr.</td>
-              </tr>
-              <tr>
-                <td>Treasury Yield</td>
-                <td>14.2%</td>
-                <td>Steady</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="dashboard-grid">
-        <div class="card">
-          <div class="card-title">Generate Economic Forecast</div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px">
-            <div class="form-group">
-              <label>Forecast Horizon</label>
-              <select>
-                <option>Q4 2024</option>
-                <option>Annual 2025</option>
-                <option>5-Year Strategic</option>
-              </select>
+          <div class="indicator-pane">
+            <div style="font-size: 0.75rem; margin-bottom: 5px">
+              RSI (14) -
+              <span style="color: var(--danger-red)">68.42 (Overbought)</span>
             </div>
-            <div class="form-group">
-              <label>Projected Interest Rate (%)</label>
-              <input type="number" value="15.5" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Analysis Findings & Implications</label>
-            <textarea
-              rows="4"
-              placeholder="Enter qualitative analysis of the trends identified above..."
-            ></textarea>
-          </div>
-          <div style="text-align: right">
-            <button class="btn btn-primary">
-              Save Analysis to Policy Review
-            </button>
+            <div
+              style="
+                height: 60px;
+                border: 1px solid #333;
+                background: linear-gradient(90deg, transparent 50%, #444 50%);
+                background-size: 20px 100%;
+              "
+            ></div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-title">Market Sentiment</div>
-          <div
+        <div class="side-panel">
+          <div class="section-title">Analysis Findings</div>
+          <label style="font-size: 0.8rem; display: block; margin-bottom: 5px"
+            >Technical Observation</label
+          >
+          <textarea
+            placeholder="Enter trend observations... e.g., 'RSI showing bearish divergence on the 3-month chart for ETH-TEL. Bullish crossover expected in T-Bills...'"
+          ></textarea>
+
+          <label style="font-size: 0.8rem; display: block; margin-bottom: 5px"
+            >Investment Recommendation</label
+          >
+          <select
             style="
-              padding: 10px;
-              background: #fffde7;
-              border-radius: 4px;
-              font-size: 0.85rem;
-              border: 1px solid #ffe082;
+              width: 100%;
+              margin-bottom: 15px;
+              background: #0d1117;
+              color: white;
+              border: 1px solid var(--border-gray);
+              padding: 5px;
             "
           >
-            <strong>Alert:</strong> High correlation detected between
-            Agriculture Commodity prices and Sector Index performance.
+            <option>Neutral / Hold</option>
+            <option>Overweight (Increase Exposure)</option>
+            <option>Underweight (Reduce Exposure)</option>
+          </select>
+
+          <div
+            style="
+              background: rgba(248, 245, 245, 0.368);
+              padding: 15px;
+              border-radius: 6px;
+              margin-bottom: 20px;
+            "
+          >
+            <p style="font-size: 0.8rem; margin: 0; line-height: 1.4">
+              <strong>Note:</strong> These findings will be used as
+              justification for Policy Updates in SUC_001.
+            </p>
           </div>
-          <ul style="font-size: 0.8rem; margin-top: 15px; padding-left: 20px">
-            <li>NBE clarifies new FX retention rules.</li>
-            <li>Global coffee prices surge by 4%.</li>
-            <li>IMF regional outlook updated.</li>
-          </ul>
+
+          <button class="btn-action btn-primary">
+            Generate Analysis Report
+          </button>
+          <button class="btn-action btn-secondary">Save Chart View</button>
+
+          <div
+            style="
+              margin-top: 30px;
+              padding-top: 20px;
+              border-top: 1px solid var(--border-gray);
+            "
+          >
+            <div class="section-title">Workflow Status</div>
+            <div style="font-size: 0.85rem; color: #8b949e">
+              <p>Current: <span style="color: white">Draft Analysis</span></p>
+              <p>Next: <span style="color: white">Dept Head Review</span></p>
+              <p>Next: <span style="color: white">CEO Review</span></p>
+              <p>
+                Next: <span style="color: white">Executive Board Approved</span>
+              </p>
+            </div>
+            <div class="card">
+              <button type="button" class="btn">
+                <a href="SUC_005.html">SUC_005</a>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <button type="button" class="btn">
-          <a href="SUC_005.html">SUC_005</a>
-        </button>
       </div>
     </div>
   </body>

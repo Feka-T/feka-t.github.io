@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IAMS CEO Portal - Policy Approval</title>
+    <style>
+      :root {
+        --primary-blue: #2c3e50;
+        --ceo-navy: #1a2a3a;
+        --approve-green: #27ae60;
+        --reject-red: #c0392b;
+        --bg: #f4f7f6;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        display: flex;
+        background: var(--bg);
+      }
+      .sidebar {
+        width: 260px;
+        background: var(--primary-blue);
+        height: 100vh;
+        color: white;
+        padding: 25px;
+        position: fixed;
+        box-sizing: border-box;
+      }
+      .sidebar h2 {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #455a64;
+        padding-bottom: 10px;
+      }
+      .content {
+        margin-left: 260px;
+        padding: 40px;
+        width: 100%;
+      }
+      .approval-card {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+      }
+      .delta-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .delta-table th,
+      .delta-table td {
+        padding: 12px;
+        border: 1px solid #eee;
+        text-align: left;
+      }
+      .delta-table th {
+        background: #f8f9fa;
+        color: #555;
+        font-size: 0.85rem;
+      }
+      .change-highlight {
+        background: #fffde7;
+        font-weight: bold;
+        color: #d35400;
+      }
+      .comment-box {
+        background: #eef2f7;
+        padding: 15px;
+        border-radius: 4px;
+        border-left: 4px solid #3498db;
+        margin: 10px 0;
+      }
+      .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+      }
+      .btn {
+        padding: 12px 35px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h2>CEO Office</h2>
+      <div style="margin-top: 30px">
+        <p style="opacity: 0.9; font-weight: bold">Executive Tasks</p>
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+          "
+        >
+          Pending Approvals (1)
+        </div>
+        <p style="opacity: 0.6; margin-top: 20px">Strategic Reports</p>
+        <p style="opacity: 0.6">Portfolio Performance</p>
+      </div>
+    </div>
+    <div class="content">
+      <h1>Review Investment Policy Proposal</h1>
+      <p>
+        <strong>Proposal ID:</strong> POL-2024-005 |
+        <strong>Originator:</strong> Investment Committee
+      </p>
+
+      <div class="approval-card">
+        <h3>1. Previous Approval Level: Department Head</h3>
+        <div class="comment-box">
+          <strong>Remark from Dept Head (Alemayehu T.):</strong> "The proposed
+          shift toward higher Equity exposure is justified by the current
+          10-year yield trends in NBE T-Bills. Recommend approval for the CEO."
+        </div>
+      </div>
+
+      <div class="approval-card">
+        <h3>2. Delta Analysis: Current vs. Proposed</h3>
+        <table class="delta-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Current Value</th>
+              <th>Proposed Value</th>
+              <th>Strategic Impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Equity Allocation</td>
+              <td>25%</td>
+              <td class="change-highlight">35% (+10%)</td>
+              <td>High Growth Focus</td>
+            </tr>
+            <tr>
+              <td>Corporate Bonds</td>
+              <td>40%</td>
+              <td class="change-highlight">30% (-10%)</td>
+              <td>Risk Reduction</td>
+            </tr>
+            <tr>
+              <td>VaR Limit (99%)</td>
+              <td>4.5%</td>
+              <td class="change-highlight">5.2% (+0.7%)</td>
+              <td>Increased Volatility Tolerance</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="approval-card">
+        <h3>3. CEO Decision</h3>
+        <textarea
+          placeholder="Optional: Add CEO directives or comments..."
+          style="width: 100%; height: 80px; padding: 10px; margin-top: 10px"
+        ></textarea>
+        <div class="btn-group">
+          <button class="btn" style="background: var(--approve-green)">
+            Approve & Forward to Board
+          </button>
+          <button class="btn" style="background: var(--reject-red)">
+            Reject for Revision
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

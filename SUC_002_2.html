@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IAMS - Executive Board Authorization</title>
+    <style>
+      :root {
+        --board-gold: #b8860b;
+        --board-navy: #001f3f;
+        --bg: #fafafa;
+      }
+      body {
+        font-family: "Georgia", serif;
+        margin: 0;
+        background: var(--bg);
+        color: #222;
+      }
+      .header {
+        background: var(--board-navy);
+        color: white;
+        padding: 20px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 5px solid var(--board-gold);
+      }
+      .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background: white;
+        padding: 50px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+      }
+      .approval-trail {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px double #ccc;
+      }
+      .trail-step {
+        text-align: center;
+        font-size: 0.85rem;
+        color: #777;
+      }
+      .trail-step.done {
+        color: #27ae60;
+        font-weight: bold;
+      }
+      .section {
+        margin-bottom: 35px;
+      }
+      h2 {
+        border-bottom: 1px solid var(--board-gold);
+        padding-bottom: 10px;
+        color: var(--board-navy);
+      }
+      .rationale {
+        font-style: italic;
+        background: #fdfdfd;
+        padding: 20px;
+        border: 1px solid #eee;
+        line-height: 1.6;
+      }
+      .board-actions {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 30px;
+        border-top: 1px solid #eee;
+      }
+      .btn-board {
+        padding: 15px 50px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin: 0 10px;
+        border: none;
+        font-family: "Segoe UI", sans-serif;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>IAMS Executive Board Portal</h1>
+      <span>Session: Q1-2024 Policy Review</span>
+    </div>
+
+    <div class="container">
+      <div class="approval-trail">
+        <div class="trail-step done">✓ Officer Drafted</div>
+        <div class="trail-step done">✓ Dept Head Reviewed</div>
+        <div class="trail-step done">✓ CEO Approved</div>
+        <div class="trail-step" style="color: var(--board-gold)">
+          ● Board Final Decision
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Policy Ratification: Strategic Asset Allocation 2024</h2>
+        <p>
+          The following policy changes have been vetted through the internal
+          risk hierarchy and are presented for final Board authorization.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Strategic Justification</h3>
+        <div class="rationale">
+          "This policy update aligns with our 5-year strategic plan to diversify
+          into high-yield domestic equities. The findings from our SUC_004 Trend
+          Analysis indicate a sustainable growth window in the financial sector.
+          Both the Department Head and CEO have endorsed the updated VaR limits
+          as necessary for these returns."
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Executive Summary of Changes</h3>
+        <ul style="line-height: 2">
+          <li>
+            <strong>Equity Limit:</strong> Increased from 25% to 35% of total
+            portfolio.
+          </li>
+          <li>
+            <strong>ESG Compliance:</strong> Added strict exclusion for
+            high-carbon emitting industries per 2024 mandates.
+          </li>
+          <li>
+            <strong>Rebalancing:</strong> Frequency shifted from Quarterly to
+            Monthly for tighter risk control.
+          </li>
+        </ul>
+      </div>
+
+      <div class="board-actions">
+        <button class="btn-board" style="background: #27ae60; color: white">
+          RATIFY & ACTIVATE POLICY
+        </button>
+        <button class="btn-board" style="background: #eee; color: #444">
+          RETURN FOR CLARIFICATION
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
